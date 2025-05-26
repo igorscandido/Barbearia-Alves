@@ -10,7 +10,7 @@
         <select name="procedure_type_id" id="procedure_type_id" required onchange="updateValor()">
             <option value="">Selecione...</option>
             @foreach($procedureTypes as $type)
-                <option value="{{ $type->id }}" data-valor="{{ $type->valor }}" {{ $procedure->procedure_type_id == $type->id ? 'selected' : '' }}>{{ $type->nome }} ({{ $type->barber->name ?? '-' }})</option>
+                <option value="{{ $type->id }}" data-valor="{{ $type->valor }}" {{ $procedure->procedure_type_id == $type->id ? 'selected' : '' }}>{{ $type->nome }}</option>
             @endforeach
         </select>
     </div>
