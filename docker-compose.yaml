@@ -1,0 +1,19 @@
+services:
+  database:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MARIADB_USER: user
+      MARIADB_PASSWORD: password
+      MARIADB_ROOT_PASSWORD: root
+    volumes:
+      - database:/var/lib/mysql/data/
+    ports:
+      - "3306:3306"
+    networks:
+      - application-network
+volumes:
+  database:
+networks:
+  application-network:
+    driver: bridge
