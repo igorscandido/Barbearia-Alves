@@ -20,8 +20,11 @@ class ProcedureController extends Controller
         $data = $request->input('data');
         $procedures = Procedure::with(['client', 'barber'])
             ->when($search, function($query, $search) {
-                $query->whereHas('client', function($q) use ($search) {
-                    $q->where('nome', 'like', "%$search%");
+                $query->where(function($q) use ($search) {
+                    $q->whereHas('client', function($q2) use ($search) {
+                        $q2->where('name', 'like', "%$search%");
+                    })
+                    ->orWhere('tipo', 'like', "%$search%");
                 });
             })
             ->when($data, function($query, $data) {
