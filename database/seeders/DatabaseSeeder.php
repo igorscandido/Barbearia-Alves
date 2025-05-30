@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         ]);
         \App\Models\User::create([
             'name' => 'Cliente',
-            'email' => 'cliente@barbearia.com',
+            'telefone' => '11987654321',
             'password' => Hash::make('cliente1234'),
             'role' => 'cliente',
         ]);
