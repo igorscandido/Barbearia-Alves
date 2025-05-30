@@ -26,7 +26,7 @@
 </head>
 <body>
     <div class="topbar">
-        <img src="/logo-barbearia.png" alt="Barbearia Alves" class="logo">
+        <img src="/logo.jpeg" alt="Barbearia Alves" class="logo">
         @if(Auth::check())
         <nav class="nav">
             <a href="/" class="{{ request()->is('/') ? 'active' : '' }}">Início</a>
