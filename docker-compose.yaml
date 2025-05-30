@@ -1,4 +1,17 @@
 services:
+  phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    ports:
+      - "3307:80"
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=database
+      - PMA_PORT=3306
+    volumes:
+      - phpadmin-volume
+    networks:
+      - application-network
   database:
     image: mariadb:latest
     restart: always
