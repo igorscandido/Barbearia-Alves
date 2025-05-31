@@ -20,7 +20,7 @@ services:
       MARIADB_PASSWORD: password
       MARIADB_ROOT_PASSWORD: root
     volumes:
-      - database:/var/lib/mysql/data/
+      - database:/var/lib/mysql/
     ports:
       - "3306:3306"
     networks:
