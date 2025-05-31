@@ -18,7 +18,14 @@ class ProcedureController extends Controller
     {
         $search = $request->input('search');
         $data = $request->input('data');
-        $procedures = Procedure::with(['client', 'barber'])
+        $query = Procedure::with(['client', 'barber']);
+        
+        // Se for cliente, filtra apenas os agendamentos do próprio usuário
+        if (auth()->user()->isCliente()) {
+            $query->where('client_id', auth()->id());
+        }
+        
+        $procedures = $query
             ->when($search, function($query, $search) {
                 $query->where(function($q) use ($search) {
                     $q->whereHas('client', function($q2) use ($search) {
