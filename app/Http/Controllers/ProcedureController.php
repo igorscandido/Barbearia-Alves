@@ -100,12 +100,21 @@ class ProcedureController extends Controller
         if (auth()->user()->isCliente()) {
             $clients = collect([auth()->user()]);
             $barbers = \App\Models\User::where('role', 'barbeiro')->orderBy('name')->get();
-            $procedureTypes = \App\Models\ProcedureType::with('barber')->orderBy('nome')->get();
+            $procedureTypes = \App\Models\ProcedureType::orderBy('nome')->get();
         } else {
-            $clients = \App\Models\Client::orderBy('nome')->get();
+            $clients = \App\Models\User::where('role', 'cliente')
+                ->orWhere('id', $procedure->client_id)
+                ->orderBy('name')
+                ->get()
+                ->unique('id');
             $barbers = \App\Models\User::where('role', 'barbeiro')->orderBy('name')->get();
-            $procedureTypes = \App\Models\ProcedureType::with('barber')->orderBy('nome')->get();
+            $procedureTypes = \App\Models\ProcedureType::orderBy('nome')->get();
         }
+        // Garante que o tipo de procedimento do agendamento está na lista
+        if ($procedure->procedure_type_id && !$procedureTypes->contains('id', $procedure->procedure_type_id)) {
+            $procedureTypes->push($procedure->procedureType);
+        }
+        $procedureTypes = $procedureTypes->unique('id');
         return view('procedures.edit', compact('procedure', 'clients', 'barbers', 'procedureTypes'));
     }
 

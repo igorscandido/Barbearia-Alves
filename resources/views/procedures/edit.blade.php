@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $isEdit = true;
+@endphp
 <h2>Editar Agendamento</h2>
 <form method="POST" action="{{ Auth::user()->isCliente() ? route('cliente.procedures.update', $procedure) : route('barbeiro.procedures.update', $procedure) }}">
     @csrf
@@ -10,7 +13,10 @@
         <select name="procedure_type_id" id="procedure_type_id" required onchange="updateValor()">
             <option value="">Selecione...</option>
             @foreach($procedureTypes as $type)
-                <option value="{{ $type->id }}" data-valor="{{ $type->valor }}" {{ $procedure->procedure_type_id == $type->id ? 'selected' : '' }}>{{ $type->nome }}</option>
+                <option value="{{ $type->id }}" data-valor="{{ $type->valor }}"
+                    {{ ($procedure->procedure_type_id == $type->id || (is_null($procedure->procedure_type_id) && $procedure->tipo == $type->nome)) ? 'selected' : '' }}>
+                    {{ $type->nome }}
+                </option>
             @endforeach
         </select>
     </div>
@@ -18,23 +24,11 @@
         <label for="data">Data e Hora</label>
         <input type="datetime-local" name="data" id="data" value="{{ $procedure->data ? \Carbon\Carbon::parse($procedure->data)->format('Y-m-d\TH:i') : '' }}" required>
     </div>
-    @if(auth()->user()->isCliente())
     <div class="form-group">
         <label for="client_id">Cliente</label>
-        <input type="hidden" name="client_id" id="client_id" value="{{ Auth::id() }}">
-        <input type="text" value="{{ Auth::user()->name }}" disabled>
+        <input type="hidden" name="client_id" id="client_id" value="{{ $procedure->client_id }}">
+        <input type="text" value="{{ $procedure->client->name ?? '-' }}" disabled>
     </div>
-    @else
-    <div class="form-group">
-        <label for="client_id">Cliente</label>
-        <select name="client_id" id="client_id" required>
-            <option value="">Selecione...</option>
-            @foreach($clients as $client)
-                <option value="{{ $client->id }}" {{ $procedure->client_id == $client->id ? 'selected' : '' }}>{{ $client->name }} ({{ $client->telefone }})</option>
-            @endforeach
-        </select>
-    </div>
-    @endif
     <div class="form-group">
         <label for="barber_id">Barbeiro</label>
         <select name="barber_id" id="barber_id" required>

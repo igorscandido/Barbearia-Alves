@@ -13,6 +13,6 @@ class ProcedureType extends Model
 
     public function barber()
     {
-        return $this->belongsTo(User::class, 'barber_id');
+        return $this->belongsTo(User::class, 'barber_id')->withDefault();
     }
 }

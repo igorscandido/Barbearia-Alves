@@ -25,4 +25,9 @@ class Procedure extends Model
     {
         return $this->hasOne(Payment::class);
     }
+
+    public function procedureType()
+    {
+        return $this->belongsTo(\App\Models\ProcedureType::class, 'procedure_type_id');
+    }
 }

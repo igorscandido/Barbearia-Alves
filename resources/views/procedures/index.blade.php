@@ -17,6 +17,7 @@
             <th>Agendamento</th>
             <th>Barbeiro</th>
             <th>Data</th>
+            <th>Status</th>
             <th>Ações</th>
         </tr>
     </thead>
@@ -27,6 +28,7 @@
             <td>{{ $procedure->tipo }}</td>
             <td>{{ $procedure->barber->name ?? '-' }}</td>
             <td>{{ $procedure->data ? \Carbon\Carbon::parse($procedure->data)->format('d/m/Y H:i') : '-' }}</td>
+            <td>{{ $procedure->status }}</td>
             <td>
                 <a href="{{ Auth::user()->isCliente() ? route('cliente.procedures.edit', $procedure) : route('barbeiro.procedures.edit', $procedure) }}" title="Editar"><i class="fa fa-edit"></i></a>
                 <form action="{{ Auth::user()->isCliente() ? route('cliente.procedures.destroy', $procedure) : route('barbeiro.procedures.destroy', $procedure) }}" method="POST" style="display:inline">
