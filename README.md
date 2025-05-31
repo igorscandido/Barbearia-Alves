@@ -87,8 +87,5 @@ sistema-barbearia-alves/
 ## About Cursor & Vibe Coding
 This project was entirely developed using [Cursor](https://www.cursor.so/), an AI-powered code editor. All code, structure, and documentation were generated with the help of AI, demonstrating the "vibe coding" approach—where the developer and AI collaborate in real time for rapid, high-quality software delivery.
 
-## Author
-- Igor Cândido (with Cursor AI)
-
 ## License
 MIT
